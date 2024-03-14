@@ -1,3 +1,4 @@
+// Code your design here
 `timescale 1ns / 1ps
 
 module SPI_Slave(
@@ -7,6 +8,11 @@ module SPI_Slave(
 );
 
 reg [7:0] Register [7:0];  // Internal Register Bank
+  
+  initial begin Register[0]=8'h12;
+    Register[1]=8'h52; Register[2]=8'h35; Register[3]=8'h35; Register[4]=8'h36; Register[5]=8'h75; Register[6]=8'h46; Register[7]=8'h39;
+  
+  end
 
 reg WR;
 reg [2:0] EXT_ADDR;
@@ -39,11 +45,13 @@ always @(posedge sclk) begin
                     else begin
                         if (WR) begin
                             Register[REG_ADDR] <= {mosi, Register[REG_ADDR][7:1]};
+                          
                             miso_oe <= 1'b1;
                             miso <= 1'bZ; 
                         end
                         else begin
-                            miso <= Register[REG_ADDR][0];
+                            miso = Register[REG_ADDR][0];
+                          Register[REG_ADDR]={Register[REG_ADDR][0],Register[REG_ADDR][7:1]};
                             miso_oe <= 1'b1;
                         end
                     end
@@ -51,7 +59,10 @@ always @(posedge sclk) begin
             default: COUNTER = 5'b10001;  
         endcase
         COUNTER = COUNTER - 5'b00001;
+     
+
+
     end
 end
-
 endmodule
+
