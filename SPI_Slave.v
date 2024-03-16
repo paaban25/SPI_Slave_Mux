@@ -31,6 +31,7 @@ always @(posedge sclk) begin
     if (rst | !cs) begin
         miso_oe <= 1'b0;
         miso <= 1'bZ; 
+        COUNTER<=5'b00000;
     end
     else begin
         case (COUNTER)
