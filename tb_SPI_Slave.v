@@ -1,5 +1,7 @@
 // Code your testbench here
 // or browse Examples
+// Code your testbench here
+// or browse Examples
  `timescale 1ns / 1ps
  
  module tb_SPI_Slave();
@@ -35,25 +37,21 @@
      // Testbench stimulus
      initial begin
          // Initialize inputs
-         mosi = 0;
-         sclk = 0;
-         cs = 1;
-         rst = 1;
-         addr = 0;
+         
          
          // Release reset
          #10 rst = 0;
          
          // Test case 1: Write to Register 0x0F
-         addr = 3'b001;
+         addr = 3'b111;
          cs = 1;
-         mosi = 0; 
+         mosi = 0; //set this 0 for read and 1 for write
          #20;
        mosi = 1; // EXT_ADDR[0]
          #20;
-         mosi = 0; // EXT_ADDR[1]
+         mosi = 1; // EXT_ADDR[1]
          #20;
-       mosi = 0; // EXT_ADDR[2]
+       mosi = 1; // EXT_ADDR[2]
          #20;
          mosi = 0; // FUTURE
          #20;
@@ -73,14 +71,15 @@
          #20;
          mosi = 1; // Data bit 3
          #20;
-         mosi = 0; // Data bit 2
+         mosi = 1; // Data bit 2
          #20;
-         mosi = 1; // Data bit 1
+         mosi = 0; // Data bit 1
          #20;
-         mosi = 0; // Data bit 0
+         mosi = 1; // Data bit 0
          #20;
-         cs = 1;
-         #20;
+         
+         
+       
  
          
          // End simulation
