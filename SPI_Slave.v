@@ -1,20 +1,12 @@
-// Code your design here
-// Code your design here
+
 `timescale 1ns / 1ps
 
 module SPI_Slave(
     input mosi, sclk, cs, rst,
     input [2:0] addr,
     output reg miso_oe, miso,
-  output reg [7:0] testreg       //to be deleted at end
 );
-
 reg [7:0] Register [7:0];  // Internal Register Bank
-  
-
-  
-  
-
 initial begin 
     Register[0] = 8'h12;
     Register[1] = 8'h52;
@@ -23,14 +15,13 @@ initial begin
     Register[4] = 8'h36;
     Register[5] = 8'h75;
     Register[6] = 8'h46;
-  Register[7] = 8'h35;
-  
+  Register[7] = 8'h35; 
 end
 
 reg WR;
 reg [2:0] EXT_ADDR;
 reg [2:0] REG_ADDR;
-reg FUTURE;  // Register to extract from words
+reg RESERVED;  // Register to extract from words
 
 reg [4:0] COUNTER = 5'b10000;
 
@@ -81,11 +72,4 @@ always @(posedge sclk) begin
         COUNTER = COUNTER - 5'b00001;
     end
 end
-  
-  
-  always@(posedge sclk)
-    testreg=Register[7];    //this always block to be removed at end
-  
-  
-
 endmodule
