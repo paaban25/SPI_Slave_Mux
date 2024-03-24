@@ -1,10 +1,10 @@
 
 `timescale 1ns / 1ps
 
-module SPI_Slave(
+module SPI_Slave #(parameter addr=3'b111)
+  (
     input mosi, sclk, cs, rst,
-    input [2:0] addr,
-    output reg miso_oe, miso,
+    output reg miso_oe, miso
 );
 reg [7:0] Register [7:0];  // Internal Register Bank
 initial begin 
@@ -37,7 +37,7 @@ always @(posedge sclk) begin
             5'b01111: EXT_ADDR[0] <= mosi;
             5'b01110: EXT_ADDR[1] <= mosi;
             5'b01101: EXT_ADDR[2] <= mosi;
-            5'b01100: FUTURE <= mosi;
+            5'b01100: RESERVED <= mosi;
             5'b01011: REG_ADDR[0] <= mosi;
             5'b01010: REG_ADDR[1] <= mosi;
             5'b01001: REG_ADDR[2] <= mosi;
